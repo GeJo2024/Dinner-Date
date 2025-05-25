@@ -3,273 +3,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dear Gillian ❤️</title>
+  <title>A Humble Invitation</title>
   <style>
-    html, body {
+    body {
       margin: 0;
       padding: 0;
-      font-family: "Segoe UI", sans-serif;
-      height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
-      background: linear-gradient(135deg, #FFDEE9, #B5FFFC, #C1FFD7, #FFE6C7);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .stars {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: url('https://www.transparenttextures.com/patterns/stardust.png');
-      opacity: 0.15;
-      z-index: 0;
-      animation: twinkle 8s infinite linear;
-      top: 0;
-      left: 0;
-    }
-
-    @keyframes twinkle {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
-    }
-
-    body {
+      font-family: 'Georgia', serif;
+      background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
       display: flex;
-      justify-content: center;
       align-items: center;
-      text-align: center;
-      color: #333;
-      padding: 20px;
-      position: relative;
+      justify-content: center;
       min-height: 100vh;
-      box-sizing: border-box;
+      text-align: center;
+      backdrop-filter: brightness(0.6);
     }
 
     .container {
+      background-color: rgba(0, 0, 0, 0.65);
+      padding: 40px;
+      border-radius: 15px;
       max-width: 600px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
-      padding: 2rem 1.2rem;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-      backdrop-filter: blur(8px);
-      position: relative;
-      z-index: 1;
-      border: 12px solid transparent;
-      border-image: url('https://www.transparenttextures.com/patterns/flower.png') 30 round;
-      box-sizing: border-box;
-      margin: 2rem auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      animation: fadeIn 2s ease-in-out forwards;
     }
 
-    .container::before,
-    .container::after {
-      content: "🌸";
-      font-size: 3rem;
-      position: absolute;
-      color: #f6c1c1;
-      opacity: 0.3;
-      user-select: none;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .container::before {
-      top: 15px;
-      left: 15px;
-      transform: rotate(-15deg);
-    }
-
-    .container::after {
-      bottom: 15px;
-      right: 15px;
-      transform: rotate(25deg);
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
 
     h1 {
-      font-size: clamp(1.5rem, 5vw, 2.2rem);
-      margin-bottom: 10px;
-      z-index: 2;
-      position: relative;
-    }
-
-    p, .poem {
-      font-size: 1rem;
-      margin: 10px 0;
-      line-height: 1.6;
-      color: #555;
+      font-size: 2em;
+      margin-bottom: 20px;
       font-style: italic;
-      position: relative;
-      z-index: 2;
     }
 
-    .poem {
-      margin: 10px 0 25px;
-      white-space: pre-line;
-      color: #444;
+    p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 20px;
     }
 
-    .verse-divider {
-      margin: 15px auto 10px;
-      font-style: normal;
-      font-size: 1rem;
-      font-weight: bold;
-      color: #888;
-      z-index: 2;
-      position: relative;
+    hr {
+      border: none;
+      height: 2px;
+      width: 80%;
+      margin: 30px auto;
+      background: linear-gradient(to right, transparent, #fff, transparent);
+      opacity: 0.5;
     }
 
     .buttons {
-      margin-top: 25px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      z-index: 2;
-      position: relative;
+      margin-top: 30px;
     }
 
     button {
-      padding: 14px 24px;
-      font-size: 1rem;
+      background-color: #f4e3d7;
+      color: #000;
       border: none;
-      border-radius: 12px;
+      padding: 12px 25px;
+      margin: 10px;
+      border-radius: 10px;
+      font-size: 1em;
       cursor: pointer;
-      transition: transform 0.2s ease;
-      font-weight: bold;
-      user-select: none;
-      width: 100%;
-      max-width: 200px;
+      transition: background 0.3s;
     }
 
     button:hover {
-      transform: scale(1.1);
-    }
-
-    .yes {
-      background-color: #8ee4af;
-      color: #004d40;
-    }
-
-    .no {
-      background-color: #ffb6b9;
-      color: #7b1e1e;
-    }
-
-    .sad-animation {
-      display: none;
-      margin-top: 20px;
-      font-size: 2rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .show-sad {
-      display: block;
-      animation: cry 1.5s infinite;
-    }
-
-    @keyframes cry {
-      0%, 100% { transform: translateY(0); opacity: 0.8; }
-      50% { transform: translateY(10px); opacity: 1; }
-    }
-
-    .show-sad::after {
-      content: '💧';
-      display: block;
-      animation: drop 1.5s infinite;
-      font-size: 2rem;
-    }
-
-    @keyframes drop {
-      0% { transform: translateY(0); opacity: 0; }
-      50% { transform: translateY(10px); opacity: 1; }
-      100% { transform: translateY(20px); opacity: 0; }
-    }
-
-    @media screen and (max-width: 480px) {
-      .container {
-        max-width: 90%;
-        padding: 1.5rem 1rem;
-        border-width: 8px;
-        margin: 2rem 0;
-      }
-
-      .container::before,
-      .container::after {
-        font-size: 2rem;
-      }
-
-      .poem, p {
-        font-size: 0.95rem;
-      }
-
-      button {
-        font-size: 0.95rem;
-        padding: 12px 20px;
-      }
-    }
-
-    @media screen and (max-width: 360px) {
-      .buttons {
-        flex-direction: column;
-        gap: 10px;
-      }
+      background-color: #f2d6c2;
     }
   </style>
 </head>
 <body>
-  <div class="stars"></div>
-
   <div class="container">
-    <h1><b>Dearest Gillian,</b></h1>
-    <p><b>
-      It is with great esteem and heartfelt regard that I present to you this humble invitation.  
-      In these modern days, I dare to hope that you shall grant me the honour of your company for an evening repast—  
-      a dinner shared beneath the gentle glow of candlelight and accompanied by joyous conversation.
-      <br><br>
-      Pray, do peruse the lines below and let your heart be your guide.
-    </b></p>
+    <h1>A Humble Invitation</h1>
 
-    <div class="verse-divider">— A short verse from the heart —</div>
+    <p><em>
+    In gardens where the roses bloom so fair,<br/>
+    I find no blossom beyond compare.<br/>
+    Yet here I stand with modest, hopeful grace,<br/>
+    Asking for but one evening’s embrace.<br/><br/>
 
-    <div class="poem"><b>
-      In gardens where the roses bloom so fair,  
-      I find no blossom beyond compare.  
-      Yet here I stand with modest, hopeful grace,  
-      Asking for but one evening’s embrace.  
+    A dinner’s feast, with laughter and delight,<br/>
+    To share with you this gentle, starry night.<br/>
+    Should you say "No," I shall understand—<br/>
+    And dine alone with dreams still close at hand.
+    </em></p>
 
-      A dinner’s feast, with laughter and delight,  
-      To share with you this gentle, starry night.  
-      Should you say "No," I shall understand—  
-      And dine alone with dreams still close at hand.
-    </b></div>
+    <hr />
+
+    <p><strong>Dearest Gillian,</strong></p>
+    <p>It is with great esteem and heartfelt regard that I present to you this humble invitation.<br/>
+    In these modern days, I dare to hope that you shall grant me the honour of your company for an evening repast—<br/>
+    a dinner shared beneath the gentle glow of candlelight and accompanied by joyous conversation.</p>
 
     <div class="buttons">
-      <button class="yes" onclick="sayYes()" aria-label="Say yes to the invitation">Yes, my dear! 😊</button>
-      <button class="no" onclick="sayNo()" aria-label="Say no to the invitation">Alas, no... 😢</button>
-    </div>
-
-    <div class="sad-animation" id="sad">
-      💔💧 I'm not crying... you're crying 💧💔
+      <a href="https://wa.me/233202525239?text=Dearest%20sir%2C%20I%20would%20be%20honoured%20to%20join%20you%20for%20an%20evening%20of%20dinner%20and%20conversation." target="_blank">
+        <button>Yes, I'd love to 💌</button>
+      </a>
+      <button onclick="this.textContent='Maybe next time 💔'; this.disabled=true;">No, not this time</button>
     </div>
   </div>
-
-  <script>
-    function sayYes() {
-      window.location.href = "https://wa.me/233202525239?text=Dearest%20Gillian!%20I%20would%20be%20delighted%20to%20join%20you%20for%20dinner.%20Looking%20forward%20to%20our%20evening!%20😊";
-    }
-
-    function sayNo() {
-      document.getElementById("sad").classList.add("show-sad");
-    }
-  </script>
 </body>
 </html>
