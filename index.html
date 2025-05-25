@@ -9,8 +9,9 @@
       margin: 0;
       padding: 0;
       font-family: "Segoe UI", sans-serif;
-      height: 100vh;
-      overflow: hidden;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
       background: linear-gradient(135deg, #FFDEE9, #B5FFFC, #C1FFD7, #FFE6C7);
       background-size: 400% 400%;
       animation: gradientShift 15s ease infinite;
@@ -30,7 +31,8 @@
       opacity: 0.15;
       z-index: 0;
       animation: twinkle 8s infinite linear;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
     }
 
     @keyframes twinkle {
@@ -47,6 +49,8 @@
       color: #333;
       padding: 20px;
       position: relative;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
 
     .container {
@@ -54,7 +58,7 @@
       width: 100%;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 20px;
-      padding: 30px 20px;
+      padding: 2rem 1.2rem;
       box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(8px);
       position: relative;
@@ -62,6 +66,7 @@
       border: 12px solid transparent;
       border-image: url('https://www.transparenttextures.com/patterns/flower.png') 30 round;
       box-sizing: border-box;
+      margin: 2rem auto;
     }
 
     .container::before,
@@ -89,7 +94,7 @@
     }
 
     h1 {
-      font-size: 2.2rem;
+      font-size: clamp(1.5rem, 5vw, 2.2rem);
       margin-bottom: 10px;
       z-index: 2;
       position: relative;
@@ -190,15 +195,32 @@
     }
 
     @media screen and (max-width: 480px) {
-      h1 {
-        font-size: 1.7rem;
+      .container {
+        max-width: 90%;
+        padding: 1.5rem 1rem;
+        border-width: 8px;
+        margin: 2rem 0;
       }
+
+      .container::before,
+      .container::after {
+        font-size: 2rem;
+      }
+
       .poem, p {
         font-size: 0.95rem;
       }
+
       button {
         font-size: 0.95rem;
         padding: 12px 20px;
+      }
+    }
+
+    @media screen and (max-width: 360px) {
+      .buttons {
+        flex-direction: column;
+        gap: 10px;
       }
     }
   </style>
