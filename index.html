@@ -96,25 +96,13 @@
       <button id="noBtn">No, not this time</button>
     </div>
 
-    <div class="buttons" id="secondMsgDiv" style="display:none;">
-      <p>Please now choose one of these restaurants you'd love to dine at:</p>
-      <button id="rest1">Polo Club Restaurant & Lounge</button>
-      <button id="rest2">Saint Pablo Restaurant</button>
-      <button id="rest3">Lareva Restaurant</button>
-    </div>
-  </div>
-
   <script>
     const yesBtn1 = document.getElementById('yesBtn1');
     const noBtn = document.getElementById('noBtn');
-    const secondMsgDiv = document.getElementById('secondMsgDiv');
 
     yesBtn1.addEventListener('click', () => {
       // Open first WhatsApp message
       window.open('https://wa.me/233202525239?text=Dearest%20sir%2C%20I%20would%20be%20honoured%20to%20join%20you%20for%20an%20evening%20of%20dinner%20and%20conversation.', '_blank');
-
-      // Show second message options
-      secondMsgDiv.style.display = 'block';
 
       // Disable first buttons
       yesBtn1.disabled = true;
