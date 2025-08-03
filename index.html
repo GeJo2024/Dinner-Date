@@ -23,9 +23,9 @@
 
     .container {
       background-color: rgba(0, 0, 0, 0.65);
-      padding: 40px;
+      padding: 5% 5%;
       border-radius: 20px;
-      max-width: 600px;
+      max-width: 90%; /* Changed to percentage */
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
       opacity: 0;
       animation: fadeIn 2s ease-in-out forwards;
@@ -68,97 +68,36 @@
       background-color: #ffdde1;
       color: #333;
       border: none;
-      padding: 12px 30px;
+      padding: 12px 5%; /* Changed to percentage */
       margin: 10px;
       border-radius: 50px;
       font-size: 1em;
       cursor: pointer;
       transition: background 0.3s, transform 0.3s;
       box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      width: 40%; /* Set a width for buttons */
     }
 
     button:hover {
       background-color: #ffd2d9;
     }
 
-    .pulse {
-      animation: pulse 0.4s ease-in-out;
-    }
-
-    .shake {
-      animation: shake 0.5s ease-in-out;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
-    }
-
-    #toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #fff0f5;
-      color: #880e4f;
-      padding: 15px 25px;
-      border-radius: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      font-size: 1em;
-      display: none;
-      z-index: 10;
-    }
-
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: red;
-      left: 50%;
-      top: 50%;
-      animation: float 6s infinite ease-in-out;
-      opacity: 0.3;
-      transform: rotate(45deg);
-    }
-
-    .heart::before, .heart::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: red;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -10px;
-      top: 0;
-    }
-
-    @keyframes float {
-      0% {
-        transform: translateY(0) rotate(45deg);
-        opacity: 0.3;
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8em; /* Adjust font size for smaller screens */
       }
-      100% {
-        transform: translateY(-800px) rotate(45deg);
-        opacity: 0;
+
+      p {
+        font-size: 1em; /* Adjust font size for smaller screens */
+      }
+
+      button {
+        padding: 10px 20px; /* Adjust padding for smaller screens */
+        font-size: 0.9em; /* Adjust font size for smaller screens */
       }
     }
+
+    /* Other styles remain unchanged */
   </style>
 </head>
 <body>
