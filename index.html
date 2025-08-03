@@ -82,7 +82,6 @@
   <div class="container">
     <h1>A Humble Invitation</h1>
 
-    
     <hr />
 
     <p><strong>Dearest Gillian,</strong></p>
@@ -93,31 +92,27 @@
       <button id="noBtn">No, not this time</button>
     </div>
 
-  <script>
-    const yesBtn1 = document.getElementById('yesBtn1');
-    const noBtn = document.getElementById('noBtn');
+    <script>
+      const yesBtn1 = document.getElementById('yesBtn1');
+      const noBtn = document.getElementById('noBtn');
 
-    yesBtn1.addEventListener('click', () => {
-      // Open first WhatsApp message
-      window.open('https://wa.me/233202525239?text=Dearest%20sir%2C%20I%20would%20be%20honoured%20to%20join%20you%20for%20an%20evening%20of%20dinner%20and%20conversation.', '_blank');
+      yesBtn1.addEventListener('click', () => {
+        window.open('https://wa.me/233202525239?text=Dearest%20sir%2C%20I%20would%20be%20honoured%20to%20join%20you%20for%20an%20evening%20of%20dinner%20and%20conversation.', '_blank');
+        yesBtn1.disabled = true;
+        noBtn.disabled = true;
+      });
 
-      // Disable first buttons
-      yesBtn1.disabled = true;
-      noBtn.disabled = true;
-    });
+      noBtn.addEventListener('click', () => {
+        noBtn.textContent = 'Maybe next time 💔';
+        noBtn.disabled = true;
+        yesBtn1.disabled = true;
+        openWhatsAppWithText("Aww, you're so cute! Gonna pass this time... but don't give up on me yet 😄🍝");
+      });
 
-    noBtn.addEventListener('click', () => {
-      noBtn.textContent = 'Maybe next time 💔';
-      noBtn.disabled = true;
-      yesBtn1.disabled = true;
-    });
-
-    function openWhatsAppWithText(text) {
-      const url = 'https://wa.me/233202525239?text=' + encodeURIComponent(text);
-      window.open(url, '_blank');
-    }
-
-  </script>
+      function openWhatsAppWithText(text) {
+        const url = 'https://wa.me/233202525239?text=' + encodeURIComponent(text);
+        window.open(url, '_blank');
+      }
+    </script>
 </body>
 </html>
-
