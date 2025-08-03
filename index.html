@@ -21,63 +21,47 @@
       overflow: hidden;
     }
 
-    .flip-card {
-      background-color: transparent;
-      width: 360px;
-      height: 500px;
-      perspective: 1000px;
-    }
-
-    .flip-card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-    }
-
-    .flip-card.flipped .flip-card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .flip-card-front, .flip-card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 20px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
-    }
-
-    .flip-card-front {
+    .container {
       background-color: rgba(0, 0, 0, 0.65);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 30px;
+      padding: 40px;
+      border-radius: 20px;
+      max-width: 600px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      animation: fadeIn 2s ease-in-out forwards;
+      transition: opacity 1s ease-in-out;
+      position: relative;
+      z-index: 2;
     }
 
-    .flip-card-back {
-      background-color: rgba(0, 0, 0, 0.75);
-      transform: rotateY(180deg);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 30px;
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
 
     h1 {
-      font-size: 2em;
-      color: #ffcdd2;
+      font-size: 2.2em;
       margin-bottom: 20px;
+      font-style: italic;
+      color: #ffcdd2;
     }
 
     p {
       font-size: 1.2em;
       line-height: 1.6;
-      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    hr {
+      border: none;
+      height: 2px;
+      width: 80%;
+      margin: 30px auto;
+      background: linear-gradient(to right, transparent, #fff, transparent);
+      opacity: 0.4;
+    }
+
+    .buttons {
+      margin-top: 30px;
     }
 
     button {
@@ -96,41 +80,194 @@
     button:hover {
       background-color: #ffd2d9;
     }
+
+    .pulse {
+      animation: pulse 0.4s ease-in-out;
+    }
+
+    .shake {
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff0f5;
+      color: #880e4f;
+      padding: 15px 25px;
+      border-radius: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      font-size: 1em;
+      display: none;
+      z-index: 10;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      left: 50%;
+      top: 50%;
+      animation: float 6s infinite ease-in-out;
+      opacity: 0.3;
+      transform: rotate(45deg);
+    }
+
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-800px) rotate(45deg);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="flip-card" id="flipCard">
-    <div class="flip-card-inner">
-      <div class="flip-card-front">
-        <h1>A Humble Invitation 🌸</h1>
-        <p>Tap to reveal...</p>
-      </div>
-      <div class="flip-card-back">
-        <p><strong>Dearest Gillian,</strong></p>
-        <p>Would you do me the honor of joining me for dinner? Just you and me, good food, and (hopefully) great conversation. I would be delighted to spend the evening in your company. ✨🍷</p>
-        <button onclick="respond(true)">Yes, I'd love to 💌</button>
-        <button onclick="respond(false)">No, not this time 😔</button>
-      </div>
+  <!-- Hearts animation -->
+  <script>
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 4 + Math.random() * 4 + 's';
+      document.body.appendChild(heart);
+    }
+  </script>
+
+  <div class="container" id="mainContainer">
+    <h1>A Humble Invitation 🌸</h1>
+    <hr />
+    <p id="typingText"><strong>Dearest Gillian,</strong></p>
+    <p id="inviteMsg"></p>
+
+    <div class="buttons">
+      <button id="yesBtn1">Yes, I'd love to 💌</button>
+      <button id="noBtn">No, not this time 😔</button>
     </div>
   </div>
 
-  <script>
-    const flipCard = document.getElementById('flipCard');
+  <div id="toast"></div>
 
-    // Add click event to flip the card
-    flipCard.addEventListener('click', function() {
-      flipCard.classList.toggle('flipped');
+  <script>
+    const yesBtn1 = document.getElementById('yesBtn1');
+    const noBtn = document.getElementById('noBtn');
+    const container = document.getElementById('mainContainer');
+    const toast = document.getElementById('toast');
+    const inviteMsg = document.getElementById('inviteMsg');
+
+    const message = "Would you do me the honor of joining me for dinner? Just you and me, good food, and (hopefully) great conversation. I would be delighted to spend the evening in your company. ✨🍷";
+    let index = 0;
+
+    function typeMessage() {
+      if (index < message.length) {
+        inviteMsg.textContent += message.charAt(index);
+        index++;
+        setTimeout(typeMessage, 40);
+      }
+    }
+
+    typeMessage();
+
+    yesBtn1.addEventListener('click', () => {
+      yesBtn1.classList.add('pulse');
+      setTimeout(() => {
+        openWhatsAppWithText("Dearest sir, I would be honored to join you for an evening of dinner and conversation.✨");
+        showToast("You made my day 💕");
+        fadeOut();
+      }, 400);
+      yesBtn1.disabled = true;
+      noBtn.disabled = true;
     });
 
-    function respond(answer) {
-      const url = 'https://wa.me/233202525239?text=' +
-        encodeURIComponent(
-          answer
-            ? "Dearest sir, I would be honored to join you for an evening of dinner and conversation.✨"
-            : "Aww, you're so cute! Gonna pass this time... but don’t give up on me yet 😄🌷"
-        );
+    noBtn.addEventListener('click', () => {
+      noBtn.textContent = 'Maybe next time 💔';
+      noBtn.classList.add('shake');
+      setTimeout(() => {
+        openWhatsAppWithText("Aww, you're so cute! Gonna pass this time... but don’t give up on me yet 😄🌷");
+        showToast("Not today, but don't lose heart 🌙");
+        fadeOut();
+      }, 500);
+      yesBtn1.disabled = true;
+      noBtn.disabled = true;
+    });
+
+    function openWhatsAppWithText(text) {
+      const url = 'https://wa.me/233202525239?text=' + encodeURIComponent(text);
       window.open(url, '_blank');
     }
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 4000);
+    }
+
+    function fadeOut() {
+      container.style.opacity = 0;
+    }
+
+    // C++ Easter Egg 💡
+    console.log(`
+// Secret C++ Approval System 😘
+
+#include <iostream>
+using namespace std;
+
+bool isLoveReal(string response) {
+    return response == "Yes, I'd love to 💌";
+}
+
+int main() {
+    string herReply = "Maybe next time 💔";
+    if (isLoveReal(herReply)) {
+        cout << "Initiate dinner.exe 🍝" << endl;
+    } else {
+        cout << "HopeModule activated. Try again soon. 💫" << endl;
+    }
+    return 0;
+}
+`);
   </script>
 </body>
 </html>
