@@ -18,28 +18,31 @@
       min-height: 100vh;
       text-align: center;
       backdrop-filter: brightness(0.6);
+      overflow: hidden;
     }
 
     .container {
       background-color: rgba(0, 0, 0, 0.65);
       padding: 40px;
-      border-radius: 15px;
+      border-radius: 20px;
       max-width: 600px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
       opacity: 0;
       animation: fadeIn 2s ease-in-out forwards;
+      transition: opacity 1s ease-in-out;
+      position: relative;
+      z-index: 2;
     }
 
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+      to { opacity: 1; }
     }
 
     h1 {
-      font-size: 2em;
+      font-size: 2.2em;
       margin-bottom: 20px;
       font-style: italic;
+      color: #ffcdd2;
     }
 
     p {
@@ -54,7 +57,7 @@
       width: 80%;
       margin: 30px auto;
       background: linear-gradient(to right, transparent, #fff, transparent);
-      opacity: 0.5;
+      opacity: 0.4;
     }
 
     .buttons {
@@ -62,57 +65,209 @@
     }
 
     button {
-      background-color: #f4e3d7;
-      color: #000;
+      background-color: #ffdde1;
+      color: #333;
       border: none;
-      padding: 12px 25px;
+      padding: 12px 30px;
       margin: 10px;
-      border-radius: 10px;
+      border-radius: 50px;
       font-size: 1em;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
     button:hover {
-      background-color: #f2d6c2;
+      background-color: #ffd2d9;
+    }
+
+    .pulse {
+      animation: pulse 0.4s ease-in-out;
+    }
+
+    .shake {
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff0f5;
+      color: #880e4f;
+      padding: 15px 25px;
+      border-radius: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      font-size: 1em;
+      display: none;
+      z-index: 10;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      left: 50%;
+      top: 50%;
+      animation: float 6s infinite ease-in-out;
+      opacity: 0.3;
+      transform: rotate(45deg);
+    }
+
+    .heart::before, .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-800px) rotate(45deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>A Humble Invitation</h1>
+  <!-- Hearts animation -->
+  <script>
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = 4 + Math.random() * 4 + 's';
+      document.body.appendChild(heart);
+    }
+  </script>
 
+  <div class="container" id="mainContainer">
+    <h1>A Humble Invitation 🌸</h1>
     <hr />
-
-    <p><strong>Dearest Gillian,</strong></p>
-    <p>Would you do me the honor of joining me for dinner? Just you and me, good food, and (hopefully) great conversation. I would be delighted to spend the evening in your company.</p>
+    <p id="typingText"><strong>Dearest Gillian,</strong></p>
+    <p id="inviteMsg"></p>
 
     <div class="buttons">
       <button id="yesBtn1">Yes, I'd love to 💌</button>
-      <button id="noBtn">No, not this time</button>
+      <button id="noBtn">No, not this time 😔</button>
     </div>
+  </div>
 
-    <script>
-      const yesBtn1 = document.getElementById('yesBtn1');
-      const noBtn = document.getElementById('noBtn');
+  <div id="toast"></div>
 
-      yesBtn1.addEventListener('click', () => {
-        window.open('https://wa.me/233202525239?text=Dearest%20sir%2C%20I%20would%20be%20honoured%20to%20join%20you%20for%20an%20evening%20of%20dinner%20and%20conversation.', '_blank');
-        yesBtn1.disabled = true;
-        noBtn.disabled = true;
-      });
+  <script>
+    const yesBtn1 = document.getElementById('yesBtn1');
+    const noBtn = document.getElementById('noBtn');
+    const container = document.getElementById('mainContainer');
+    const toast = document.getElementById('toast');
+    const inviteMsg = document.getElementById('inviteMsg');
 
-      noBtn.addEventListener('click', () => {
-        noBtn.textContent = 'Maybe next time 💔';
-        noBtn.disabled = true;
-        yesBtn1.disabled = true;
-        openWhatsAppWithText("Aww, you're so cute! Gonna pass this time... but don't give up on me yet 😄🍝");
-      });
+    const message = "Would you do me the honor of joining me for dinner? Just you and me, good food, and (hopefully) great conversation. I would be delighted to spend the evening in your company. ✨🍷";
+    let index = 0;
 
-      function openWhatsAppWithText(text) {
-        const url = 'https://wa.me/233202525239?text=' + encodeURIComponent(text);
-        window.open(url, '_blank');
+    function typeMessage() {
+      if (index < message.length) {
+        inviteMsg.textContent += message.charAt(index);
+        index++;
+        setTimeout(typeMessage, 40);
       }
-    </script>
+    }
+
+    typeMessage();
+
+    yesBtn1.addEventListener('click', () => {
+      yesBtn1.classList.add('pulse');
+      setTimeout(() => {
+        openWhatsAppWithText("Dearest sir, I would be honored to join you for an evening of dinner and conversation.✨");
+        showToast("You made my day 💕");
+        fadeOut();
+      }, 400);
+      yesBtn1.disabled = true;
+      noBtn.disabled = true;
+    });
+
+    noBtn.addEventListener('click', () => {
+      noBtn.textContent = 'Maybe next time 💔';
+      noBtn.classList.add('shake');
+      setTimeout(() => {
+        openWhatsAppWithText("Aww, you're so cute! Gonna pass this time... but don’t give up on me yet 😄🌷");
+        showToast("Not today, but don't lose heart 🌙");
+        fadeOut();
+      }, 500);
+      yesBtn1.disabled = true;
+      noBtn.disabled = true;
+    });
+
+    function openWhatsAppWithText(text) {
+      const url = 'https://wa.me/233202525239?text=' + encodeURIComponent(text);
+      window.open(url, '_blank');
+    }
+
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 4000);
+    }
+
+    function fadeOut() {
+      container.style.opacity = 0;
+    }
+
+    // C++ Easter Egg 💡
+    console.log(`
+// Secret C++ Approval System 😘
+
+#include <iostream>
+using namespace std;
+
+bool isLoveReal(string response) {
+    return response == "Yes, I'd love to 💌";
+}
+
+int main() {
+    string herReply = "Maybe next time 💔";
+    if (isLoveReal(herReply)) {
+        cout << "Initiate dinner.exe 🍝" << endl;
+    } else {
+        cout << "HopeModule activated. Try again soon. 💫" << endl;
+    }
+    return 0;
+}
+`);
+  </script>
 </body>
 </html>
